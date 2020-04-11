@@ -1,28 +1,28 @@
 
-struct Reducer {
-    // original: &'a str,
+struct Reducer<'a> {
+    original: &'a str,
     stop: usize,
 }
 
-impl Reducer {
+impl<'a> Reducer<'a> {
 
-    fn new(original: & str) -> Reducer {
+    fn new<'b>(original: &'b str) -> Reducer<'b> {
         return Reducer{
-            //original: original,
+            original: original,
             stop: original.len(),
         }
     }
 
     fn reduce(&self) -> Reducer {
         return Reducer {
-            //original: self.original,
+            original: &(*self.original),
             stop: self.stop-1,
         };
     }
 
-    fn print(&self, original: &str) {
+    fn print(&self) {
         for i in 0..self.stop {
-            print!("{}", original.chars().nth(i).unwrap());
+            print!("{}", self.original.chars().nth(i).unwrap());
         }
         print!("\n");
     }
@@ -36,6 +36,6 @@ fn main() {
 
     for _ in 0..5 {
         r = r.reduce();
-        r.print(original);
+        r.print();
     }
 }
