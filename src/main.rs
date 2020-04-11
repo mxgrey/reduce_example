@@ -15,7 +15,7 @@ impl<'a> Reducer<'a> {
 
     fn reduce(&self) -> Reducer<'a> {
         return Reducer {
-            original: &(*self.original),
+            original: self.original,
             stop: self.stop-1,
         };
     }
